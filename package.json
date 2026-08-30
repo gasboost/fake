@@ -1,0 +1,26 @@
+{
+  "name": "@gasboost/fake",
+  "scripts": {
+    "test": "pnpm vitest run --coverage",
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "packageManager": "pnpm@10.18.0",
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@types/google-apps-script": "^2.0.12",
+    "@typescript-eslint/eslint-plugin": "^8.68.0",
+    "@typescript-eslint/parser": "^8.68.0",
+    "@vitest/coverage-v8": "4.1.11",
+    "eslint": "^10.9.1",
+    "globals": "^17.11.0",
+    "jiti": "^2.7.0",
+    "prettier": "^3.9.6",
+    "typescript": "^6.0.3",
+    "typescript-eslint": "^8.68.0",
+    "vitest": "^4.1.11"
+  }
+}
