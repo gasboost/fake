@@ -1,0 +1,48 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Check fake-core
+        run: pnpm --filter @gasboost/fake-core check
+
+      - name: Build fake-core
+        run: pnpm --filter @gasboost/fake-core build
+
+      - name: Smoke test fake-core
+        run: node -e "require('./packages/fake-core/dist/index.js')"
+
+      - name: Check fake-node
+        run: pnpm --filter @gasboost/fake-node check
+
+      - name: Build fake-node
+        run: pnpm --filter @gasboost/fake-node build
+
+      - name: Smoke test fake-node
+        run: node -e "require('./packages/fake-node/dist/index.js')"
