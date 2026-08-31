@@ -1,7 +1,7 @@
 import { InMemoryBlob } from "@gasboost/fake-core";
 import fs from "fs";
 import path from "path";
-import { describe, expect, it, vi } from "vitest";
+import { afterEach, describe, expect, it, vi } from "vitest";
 import { Algorithm } from "./Algorithm";
 import { NodeUtilities } from "./NodeUtilities";
 
@@ -367,6 +367,10 @@ describe("ダイジェストの計算", () => {
       ).toThrow(
         "The specified digest algorithm is not supported in this environment: sha256",
       );
+    });
+
+    afterEach(() => {
+      vi.restoreAllMocks();
     });
   });
 });
