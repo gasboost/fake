@@ -122,9 +122,16 @@ export class NodeUtilities implements GoogleAppsScript.Utilities.Utilities {
     const digestAlgorithm = new Algorithm(algorithm.toString());
     const binaryData = new BinaryData(value, charset?.toString());
 
-    if (!digestAlgorithm.isSupported()) {
+    if (digestAlgorithm.name === "md2") {
       const md2 = new Md2(binaryData.bytes);
       return new AppsScriptByte(Uint8Array.from(md2.digest)).sign();
+    }
+
+    if (!digestAlgorithm.isSupported()) {
+      throw new Error(
+        "The specified digest algorithm is not supported in this environment: " +
+          digestAlgorithm.name,
+      );
     }
 
     const hash = crypto.createHash(digestAlgorithm.name);
