@@ -1,0 +1,120 @@
+name: Publish
+
+on:
+  workflow_run:
+    workflows:
+      - CI
+    types:
+      - completed
+    branches:
+      - main
+
+jobs:
+  check-versions:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+
+    outputs:
+      publish-core: ${{ steps.versions.outputs.publish-core }}
+      publish-node: ${{ steps.versions.outputs.publish-node }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.workflow_run.head_sha }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          registry-url: https://registry.npmjs.org
+
+      - name: Check package versions
+        id: versions
+        run: |
+          check_package() {
+            local output="$1"
+            local manifest="$2"
+            local name
+            local version
+
+            name=$(node -p "require('./${manifest}').name")
+            version=$(node -p "require('./${manifest}').version")
+
+            echo "${name}@${version}"
+
+            if npm view "${name}@${version}" version > /dev/null 2>&1; then
+              echo "${output}=false" >> "$GITHUB_OUTPUT"
+            else
+              echo "${output}=true" >> "$GITHUB_OUTPUT"
+            fi
+          }
+
+          check_package publish-core packages/fake-core/package.json
+          check_package publish-node packages/fake-node/package.json
+
+  publish:
+    needs: check-versions
+    if: ${{ needs.check-versions.outputs.publish-core == 'true' || needs.check-versions.outputs.publish-node == 'true' }}
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+      id-token: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.workflow_run.head_sha }}
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          registry-url: https://registry.npmjs.org
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Check fake-core
+        run: pnpm --filter @gasboost/fake-core check
+
+      - name: Check fake-node
+        run: pnpm --filter @gasboost/fake-node check
+
+      - name: Build fake-core
+        if: ${{ needs.check-versions.outputs.publish-core == 'true' || needs.check-versions.outputs.publish-node == 'true' }}
+        run: pnpm --filter @gasboost/fake-core build
+
+      - name: Build fake-node
+        if: ${{ needs.check-versions.outputs.publish-node == 'true' }}
+        run: pnpm --filter @gasboost/fake-node build
+
+      - name: Verify fake-core package contents
+        if: ${{ needs.check-versions.outputs.publish-core == 'true' }}
+        working-directory: packages/fake-core
+        run: pnpm pack --dry-run
+
+      - name: Publish fake-core
+        if: ${{ needs.check-versions.outputs.publish-core == 'true' }}
+        working-directory: packages/fake-core
+        run: pnpm publish --access public --no-git-checks
+
+      - name: Verify fake-node package contents
+        if: ${{ needs.check-versions.outputs.publish-node == 'true' }}
+        working-directory: packages/fake-node
+        run: pnpm pack --dry-run
+
+      - name: Publish fake-node
+        if: ${{ needs.check-versions.outputs.publish-node == 'true' }}
+        working-directory: packages/fake-node
+        run: pnpm publish --access public --no-git-checks
