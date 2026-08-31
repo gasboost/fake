@@ -11,11 +11,16 @@
   },
   "type": "module",
   "scripts": {
-    "format": "prettier --write .",
-    "formatcheck": "prettier --check .",
+    "format": "prettier --ignore-path ../../.prettierignore --write .",
+    "formatcheck": "prettier --ignore-path ../../.prettierignore --check .",
     "typecheck": "tsc -p tsconfig.json --noEmit",
     "lint": "eslint . --ext .ts",
     "test": "vitest run",
-    "check": "pnpm formatcheck && pnpm lint && pnpm typecheck && pnpm test"
+    "check": "pnpm formatcheck && pnpm lint && pnpm typecheck && pnpm test",
+    "build": "tsc -p tsconfig.json"
+  },
+  "exports": {
+    ".": "./dist/index.js",
+    "./internal": "./dist/internal.js"
   }
 }
