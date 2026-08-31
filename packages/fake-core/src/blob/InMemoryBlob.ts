@@ -69,7 +69,7 @@ export class InMemoryBlob implements GoogleAppsScript.Base.Blob {
     value: string,
     charset?: string,
   ): GoogleAppsScript.Base.Blob {
-    this.bytes = new BinaryData(value, charset).bytes;
+    this.bytes = new BinaryData(value, charset ?? "UTF_8").bytes;
     return this;
   }
 
