@@ -1,7 +1,7 @@
+import { InMemoryBlob } from "@gasboost/fake-core";
 import fs from "fs";
 import path from "path";
 import { describe, expect, it } from "vitest";
-import { InMemoryBlob } from "../../fake-core/src/blob/InMemoryBlob";
 import { NodeUtilities } from "./NodeUtilities";
 
 describe("UUIDの生成", () => {

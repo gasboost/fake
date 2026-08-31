@@ -1,14 +1,16 @@
+import {
+  AppsScriptByte,
+  BinaryData,
+  DateFormatPattern,
+  InMemoryBlob,
+  Md2,
+  PartedDate,
+} from "@gasboost/fake-core";
 import { fromZonedTime } from "date-fns-tz";
 import { unzipSync, zipSync } from "fflate";
 import * as crypto from "node:crypto";
 import * as util from "node:util";
 import * as zlib from "node:zlib";
-import { InMemoryBlob } from "../../fake-core/src/blob/InMemoryBlob";
-import { AppsScriptByte } from "../../fake-core/src/utilities/AppsScriptByte";
-import { BinaryData } from "../../fake-core/src/utilities/BinaryData";
-import { DateFormatPattern } from "../../fake-core/src/utilities/DateFormatPattern";
-import { Md2 } from "../../fake-core/src/utilities/MD2";
-import { PartedDate } from "../../fake-core/src/utilities/PartedDate";
 import { Algorithm } from "./Algorithm";
 
 export const Charset = {
