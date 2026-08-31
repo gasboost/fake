@@ -1,7 +1,8 @@
 import { InMemoryBlob } from "@gasboost/fake-core";
 import fs from "fs";
 import path from "path";
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
+import { Algorithm } from "./Algorithm";
 import { NodeUtilities } from "./NodeUtilities";
 
 describe("UUIDの生成", () => {
@@ -348,6 +349,24 @@ describe("ダイジェストの計算", () => {
         77, -6, -60, -39, -23, 93, 90, -6, 93, 22, -45, 90, -13, -102, 70, -123,
         81, 18, -23, 54, 69, 48, 6, 40, -98, -83, 18, 98, -40, 120, 52, 2,
       ]);
+    });
+  });
+
+  describe("対応していないアルゴリズムを指定すると、例外がスローされる", () => {
+    it("MD2以外のアルゴリズムが実行環境で未対応の場合、エラーになる", () => {
+      vi.spyOn(Algorithm.prototype, "isSupported").mockReturnValue(false);
+
+      const utilities = new NodeUtilities();
+
+      expect(() =>
+        utilities.computeDigest(
+          utilities.DigestAlgorithm.SHA_256,
+          "test",
+          utilities.Charset.UTF_8,
+        ),
+      ).toThrow(
+        "The specified digest algorithm is not supported in this environment: sha256",
+      );
     });
   });
 });
