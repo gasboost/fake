@@ -1,0 +1,21 @@
+{
+  "name": "@gasboost/fake-core",
+  "version": "0.0.0",
+  "description": "This package provides a fake implementation of Google Apps Script built-in services for testing purposes.",
+  "license": "MIT",
+  "author": "tiger-oshima",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gasboost/fake.git",
+    "directory": "packages/fake-core"
+  },
+  "type": "module",
+  "scripts": {
+    "format": "prettier --write .",
+    "formatcheck": "prettier --check .",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "lint": "eslint . --ext .ts",
+    "test": "vitest run",
+    "check": "pnpm formatcheck && pnpm lint && pnpm typecheck && pnpm test"
+  }
+}
