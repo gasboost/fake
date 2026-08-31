@@ -32,11 +32,11 @@ jobs:
       - name: Check fake-core
         run: pnpm --filter @gasboost/fake-core check
 
-      - name: Check fake-node
-        run: pnpm --filter @gasboost/fake-node check
-
       - name: Build fake-core
         run: pnpm --filter @gasboost/fake-core build
+
+      - name: Check fake-node
+        run: pnpm --filter @gasboost/fake-node check
 
       - name: Build fake-node
         run: pnpm --filter @gasboost/fake-node build
