@@ -88,12 +88,13 @@ jobs:
       - name: Check fake-core
         run: pnpm --filter @gasboost/fake-core check
 
-      - name: Check fake-node
-        run: pnpm --filter @gasboost/fake-node check
-
       - name: Build fake-core
         if: ${{ needs.check-versions.outputs.publish-core == 'true' || needs.check-versions.outputs.publish-node == 'true' }}
         run: pnpm --filter @gasboost/fake-core build
+
+      - name: Check fake-node
+        if: ${{ needs.check-versions.outputs.publish-node == 'true' }}
+        run: pnpm --filter @gasboost/fake-node check
 
       - name: Build fake-node
         if: ${{ needs.check-versions.outputs.publish-node == 'true' }}
