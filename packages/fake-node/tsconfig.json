@@ -4,7 +4,8 @@
     "lib": ["ES2023"],
     "types": ["google-apps-script", "node"],
     "rootDir": "src",
-    "outDir": "./dist"
+    "outDir": "./dist",
+    "module": "commonjs"
   },
   "exclude": ["node_modules", "src/**/*.spec.ts", "src/**/*.test.ts"],
   "include": ["src"]

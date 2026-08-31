@@ -9,7 +9,7 @@
     "url": "git+https://github.com/gasboost/fake.git",
     "directory": "packages/fake-node"
   },
-  "type": "module",
+  "type": "commonjs",
   "scripts": {
     "format": "prettier --ignore-path ../../.prettierignore --write .",
     "formatcheck": "prettier --ignore-path ../../.prettierignore --check .",

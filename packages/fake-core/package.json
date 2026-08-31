@@ -9,7 +9,7 @@
     "url": "git+https://github.com/gasboost/fake.git",
     "directory": "packages/fake-core"
   },
-  "type": "module",
+  "type": "commonjs",
   "scripts": {
     "format": "prettier --ignore-path ../../.prettierignore --write .",
     "formatcheck": "prettier --ignore-path ../../.prettierignore --check .",
@@ -22,8 +22,7 @@
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "exports": {
-    ".": "./dist/index.js",
-    "./internal": "./dist/internal.js"
+    ".": "./dist/index.js"
   },
   "files": [
     "dist"
