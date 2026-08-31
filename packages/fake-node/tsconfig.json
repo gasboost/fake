@@ -1,8 +1,7 @@
 {
-  "extends": "../../tsconfig.json",
   "compilerOptions": {
-    "lib": ["ES2023", "DOM"],
-    "types": ["google-apps-script"],
+    "lib": ["ES2023"],
+    "types": ["google-apps-script", "node"],
     "rootDir": "src",
     "outDir": "./dist"
   },
