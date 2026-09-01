@@ -39,7 +39,10 @@ jobs:
         run: node -e "require('./packages/fake-core/dist/index.js')"
 
       - name: Verify fake-core package contents
-        run: pnpm --filter @gasboost/fake-core pack
+        run: |
+          pnpm --filter @gasboost/fake-core pack
+          tar -xOf gasboost-fake-core-*.tgz package/package.json > /tmp/fake-core-package.json
+          node -e "const packed=require('/tmp/fake-core-package.json'); const core=require('./packages/fake-core/package.json'); if (packed.dependencies['@gasboost/fake-core'] !== core.version) process.exit(1)"
 
       - name: Check fake-node
         run: pnpm --filter @gasboost/fake-node check
@@ -51,4 +54,7 @@ jobs:
         run: node -e "require('./packages/fake-node/dist/index.js')"
 
       - name: Verify fake-node package contents
-        run: pnpm --filter @gasboost/fake-node pack
+        run: |
+          pnpm --filter @gasboost/fake-node pack
+          tar -xOf gasboost-fake-node-*.tgz package/package.json > /tmp/fake-node-package.json
+          node -e "const packed=require('/tmp/fake-node-package.json'); const core=require('./packages/fake-node/package.json'); if (packed.dependencies['@gasboost/fake-node'] !== core.version) process.exit(1)"
