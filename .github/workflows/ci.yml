@@ -38,6 +38,9 @@ jobs:
       - name: Smoke test fake-core
         run: node -e "require('./packages/fake-core/dist/index.js')"
 
+      - name: Verify fake-core package contents
+        run: pnpm --filter @gasboost/fake-core pack
+
       - name: Check fake-node
         run: pnpm --filter @gasboost/fake-node check
 
@@ -46,3 +49,6 @@ jobs:
 
       - name: Smoke test fake-node
         run: node -e "require('./packages/fake-node/dist/index.js')"
+
+      - name: Verify fake-node package contents
+        run: pnpm --filter @gasboost/fake-node pack
