@@ -103,7 +103,7 @@ jobs:
       - name: Verify fake-core package contents
         if: ${{ needs.check-versions.outputs.publish-core == 'true' }}
         working-directory: packages/fake-core
-        run: pnpm pack --dry-run
+        run: pnpm pack
 
       - name: Publish fake-core
         if: ${{ needs.check-versions.outputs.publish-core == 'true' }}
@@ -113,7 +113,7 @@ jobs:
       - name: Verify fake-node package contents
         if: ${{ needs.check-versions.outputs.publish-node == 'true' }}
         working-directory: packages/fake-node
-        run: pnpm pack --dry-run
+        run: pnpm pack
 
       - name: Publish fake-node
         if: ${{ needs.check-versions.outputs.publish-node == 'true' }}
