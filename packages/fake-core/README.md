@@ -104,9 +104,7 @@ const context = new InMemoryContext(
     type: "WEB_APP",
     executeAs: "USER",
   },
-  new SecurityPolicy([
-    OAuthScope.USERINFO_EMAIL,
-  ]),
+  new SecurityPolicy([OAuthScope.USERINFO_EMAIL]),
   "ja",
   "Asia/Tokyo",
 );
