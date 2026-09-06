@@ -12,7 +12,7 @@
   "type": "commonjs",
   "scripts": {
     "format": "prettier --ignore-path ../../.prettierignore --write .",
-    "formatcheck": "prettier --ignore-path ../../.prettierignore --write README.md && git diff -- README.md",
+    "formatcheck": "prettier --ignore-path ../../.prettierignore --check .",
     "typecheck": "tsc -p tsconfig.json --noEmit",
     "lint": "eslint . --ext .ts",
     "test": "vitest run",
