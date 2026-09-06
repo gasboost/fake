@@ -89,10 +89,7 @@ Utilities.formatString(template, ...args);
 ### Digest
 
 ```ts
-Utilities.computeDigest(
-  Utilities.DigestAlgorithm.SHA_256,
-  value,
-);
+Utilities.computeDigest(Utilities.DigestAlgorithm.SHA_256, value);
 ```
 
 現在以下の Digest Algorithm 定数を公開しています。
@@ -109,16 +106,9 @@ MD2 は `@gasboost/fake-core` の実装を利用し、それ以外は Node.js �
 ### HMAC
 
 ```ts
-Utilities.computeHmacSignature(
-  Utilities.MacAlgorithm.HMAC_SHA_256,
-  value,
-  key,
-);
+Utilities.computeHmacSignature(Utilities.MacAlgorithm.HMAC_SHA_256, value, key);
 
-Utilities.computeHmacSha256Signature(
-  value,
-  key,
-);
+Utilities.computeHmacSha256Signature(value, key);
 ```
 
 現在以下の Mac Algorithm 定数を公開しています。
@@ -138,25 +128,15 @@ Utilities.computeRsaSignature(
   privateKey,
 );
 
-Utilities.computeRsaSha1Signature(
-  value,
-  privateKey,
-);
+Utilities.computeRsaSha1Signature(value, privateKey);
 
-Utilities.computeRsaSha256Signature(
-  value,
-  privateKey,
-);
+Utilities.computeRsaSha256Signature(value, privateKey);
 ```
 
 ### Blob
 
 ```ts
-const blob = Utilities.newBlob(
-  "hello",
-  "text/plain",
-  "hello.txt",
-);
+const blob = Utilities.newBlob("hello", "text/plain", "hello.txt");
 ```
 
 Blob の実体には `@gasboost/fake-core` の `InMemoryBlob` を利用します。
